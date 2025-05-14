@@ -9,6 +9,8 @@ An MCP server for scRNA-Seq analysis  with natural language!
 - Tool module, like clustering, differential expression etc.
 - Plotting module, like violin, heatmap, dotplot
 - cell-cell communication analysis
+- Pseudotime analysis
+- enrichment analysis
 
 ## ❓ Who is this for?
 
