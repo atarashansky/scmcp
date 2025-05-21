@@ -13,7 +13,7 @@ dependencies = [
     "cellrank-mcp",
     "liana-mcp",
     "decoupler-mcp",
-    "scmcp-shared",
+    "scmcp-shared>=0.2.1",
     "mcp>=1.8.0",
     "fastmcp>=2.3.0",
 ]
