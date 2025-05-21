@@ -10,34 +10,13 @@ import scanpy_mcp.server as sc_server
 import liana_mcp.server as li_server
 import cellrank_mcp.server as cr_server
 import decoupler_mcp.server as dc_server
+import scmcp_shared.server as shs
 
 
 
-class AdataState:
-    def __init__(self):
-        self.adata_dic ={"exp": {}, "splicing": {}, "activity": {}}
-        self.active_id = None
-        self.metadata = {}
-        self.cr_kernel = {}
-        self.cr_estimator = {}
-
-    def get_adata(self, sampleid=None, dtype="exp"):
-        try:
-            if self.active_id is None:
-                return None
-            sampleid = sampleid or self.active_id
-            return self.adata_dic[dtype][sampleid]
-        except KeyError as e:
-            raise KeyError(f"Key {e} not found in adata_dic[{dtype}]. check sampleid or dtype are right")
-        except Exception as e:
-            raise Exception(f"Error: {e}")
-    
-    def set_adata(self, adata, sampleid=None, sdtype="exp"):
-        sampleid = sampleid or self.active_id
-        self.adata_dic[sdtype][sampleid] = adata
 
 
-ads = AdataState()
+ads = shs.AdataState()
 
 @asynccontextmanager
 async def adata_lifespan(server: FastMCP) -> AsyncIterator[Any]:
