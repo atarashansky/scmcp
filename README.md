@@ -44,13 +44,21 @@ you can test it by running
 scmcp run
 ```
 
-#### run scnapy-server locally
+#### run scnapy-mcp locally
 Refer to the following configuration in your MCP client:
+
+check path
+```
+$ which scmcp 
+/home/test/bin/scmcp
+```
+
+> it has many tools , so it couldn't work if you model context is not large...More time, I recommend it is backend mcp server for scanpy-mcp, liana-mcp,cellrank-mcp, so they can use shared Anndata object.
 
 ```
 "mcpServers": {
   "scmcp": {
-    "command": "scmcp",
+    "command": "/home/test/bin/scmcp",
     "args": [
       "run"
     ]
@@ -58,7 +66,7 @@ Refer to the following configuration in your MCP client:
 }
 ```
 
-#### run scnapy-server remotely
+#### run scmcp remotely
 Refer to the following configuration in your MCP client:
 
 run it in your server
@@ -66,9 +74,14 @@ run it in your server
 scmcp run --transport shttp --port 8000
 ```
 
-Then configure your MCP client, like this:
+Then configure your MCP client in local AI client, like this:
 ```
-http://localhost:8000/smcp
+
+"mcpServers": {
+  "scmcp": {
+    "url": "http://localhost:8000/mcp"
+  }
+}
 ```
 
 ## 🤝 Contributing
