@@ -1,32 +1,31 @@
+import asyncio
 import pytest
 from fastmcp import Client
+import anndata
 from pathlib import Path
+from scmcp.server import sc_mcp, setup
+
+
+asyncio.run(setup())
 
 
 @pytest.mark.asyncio 
-async def test_activity(mcp_config):
-    # Pass the server directly to the Client constructor
+async def test_activity():
     testfile = Path(__file__).parent / "data/pbmc3k_processed.h5ad"
     outfile = Path(__file__).parent / "data/test.h5ad"
-    async with Client(mcp_config) as client:
-        result = await client.call_tool("sc_io_read", {"request":{"filename": testfile}, "sampleid": "pbmc3k"})
+    async with Client(sc_mcp) as client:
+        result = await client.call_tool("sc_io_read", {"request":{"filename": testfile}, "adinfo":{ "sampleid": "pbmc3k", "adtype": "exp"}})
         assert "AnnData" in result[0].text
 
         result = await client.call_tool(
             "dc_if_pathway_activity", 
-            {"request":{"top": 500}, 
-             "sampleid": "pbmc3k",
-             "dtype": "exp",
-             "sdtype": "activity"}
+            {"request":{"top": 500} , "adinfo":{ "sampleid": "pbmc3k", "adtype": "exp"}}
         )
         assert "progeny_mlm_estimate" in result[0].text
 
         result = await client.call_tool(
             "dc_if_tf_activity", 
-            {"request":{},
-             "sampleid": "pbmc3k",
-             "dtype": "exp",
-             "sdtype": "activity"}
+            {"request":{}, "adinfo":{ "sampleid": "pbmc3k", "adtype": "exp"}}
         )
         assert "collectri_ulm_estimate" in result[0].text
 
