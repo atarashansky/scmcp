@@ -10,7 +10,7 @@ authors = [
 requires-python = ">=3.10"
 dependencies = [
     "scanpy-mcp",
-    "cellrank-mcp",
+    "cellrank-mcp>=0.2.2",
     "liana-mcp",
     "decoupler-mcp",
     "scmcp-shared>=0.2.5",
