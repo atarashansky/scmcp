@@ -38,7 +38,10 @@ async def setup(modules=None):
         "cr": cr_server.cellrank_mcp, 
         "dc": dc_server.decoupler_mcp
         }
-    if modules is None or modules == "all":
-        modules = ["sc", "li", "cr", "dc"]
+    if modules is None:
+        modules = mcp_dic.keys()
     for module in modules:
-        await sc_mcp.import_server(module, mcp_dic[module])
+        if module in mcp_dic:
+            await sc_mcp.import_server(module, mcp_dic[module])
+        else:
+            raise ValueError(f"Module {module} not found")

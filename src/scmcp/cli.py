@@ -9,7 +9,7 @@ import os
 import sys
 import typer
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 
 
 app = typer.Typer(
@@ -21,7 +21,6 @@ app = typer.Typer(
 
 # Define enums for choices
 class Module(str, Enum):
-    ALL = "all"
     SC = "sc"
     LI = "li"
     CR = "cr"
@@ -36,7 +35,7 @@ class Transport(str, Enum):
 @app.command(name="run")
 def run(
     log_file: Optional[str] = typer.Option(None, "--log-file", help="Log file path, use stdout if None"),
-    module: Module = typer.Option(Module.ALL, "-m", "--module", help="Specify modules to load", 
+    modules: List[Module] = typer.Option(None, "-m", "--module", help="Specify modules to load (can be specified multiple times)", 
                               case_sensitive=False),
     transport: Transport = typer.Option(Transport.STDIO, "-t", "--transport", help="Specify transport type", 
                                  case_sensitive=False),
@@ -54,15 +53,13 @@ def run(
     os.environ['SCMCP_TRANSPORT'] = transport.value
     os.environ['SCMCP_HOST'] = host
     os.environ['SCMCP_PORT'] = str(port)
-    os.environ['SCMCP_MODULE'] = module.value
         
-
     from .server import sc_mcp, setup
     from scmcp_shared.util import add_figure_route
     from scmcp_shared.logging_config import setup_logger
     logger = setup_logger()
 
-    asyncio.run(setup(modules=module.value))
+    asyncio.run(setup(modules=modules))
 
     if transport == Transport.STDIO:
         sc_mcp.run()
