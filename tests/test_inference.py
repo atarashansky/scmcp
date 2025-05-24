@@ -21,11 +21,11 @@ async def test_activity():
             "dc_if_pathway_activity", 
             {"request":{"top": 500} , "adinfo":{ "sampleid": "pbmc3k", "adtype": "exp"}}
         )
-        assert "progeny_mlm_estimate" in result[0].text
+        assert "score_mlm" in result[0].text
 
         result = await client.call_tool(
             "dc_if_tf_activity", 
             {"request":{}, "adinfo":{ "sampleid": "pbmc3k", "adtype": "exp"}}
         )
-        assert "collectri_ulm_estimate" in result[0].text
+        assert "score_ulm" in result[0].text
 

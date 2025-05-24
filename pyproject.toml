@@ -12,7 +12,7 @@ dependencies = [
     "scanpy-mcp",
     "cellrank-mcp>=0.2.2",
     "liana-mcp",
-    "decoupler-mcp",
+    "decoupler-mcp>=0.2.5",
     "scmcp-shared>=0.2.5",
     "mcp>=1.8.0",
     "fastmcp>=2.3.5",
