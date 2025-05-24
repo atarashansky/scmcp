@@ -13,9 +13,9 @@ dependencies = [
     "cellrank-mcp",
     "liana-mcp",
     "decoupler-mcp",
-    "scmcp-shared>=0.2.1",
+    "scmcp-shared>=0.2.5",
     "mcp>=1.8.0",
-    "fastmcp>=2.3.0",
+    "fastmcp>=2.3.5",
 ]
 
 [build-system]
