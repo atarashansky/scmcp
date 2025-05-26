@@ -25,6 +25,12 @@ You can use scmcp in most AI clients, plugins, or agent frameworks that support 
 - Plugins, like Cline
 - Agent frameworks, like Agno 
 
+
+## 📚 Documentation
+
+scmcphub's complete documentation is available at https://docs.scmcphub.org
+
+
 ## 🎬 Demo
 
 A demo showing scRNA-Seq cell cluster analysis in a AI client Cherry Studio using natural language based on scmcp
