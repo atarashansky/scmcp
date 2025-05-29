@@ -3,17 +3,17 @@ import pytest
 from fastmcp import Client
 import anndata
 from pathlib import Path
-from scmcp.server import sc_mcp, setup
+import nest_asyncio
 
-asyncio.run(setup())
+nest_asyncio.apply()
 
 
 @pytest.mark.asyncio 
-async def test_create_kernel():
+async def test_create_kernel(mcp):
     """Test kernel creation with different kernel types."""
     test_dir = Path(__file__).parent / "data/pbmc68k_reduced.h5ad"
     
-    async with Client(sc_mcp) as client:
+    async with Client(mcp) as client:
         # First read the data
         result = await client.call_tool("sc_io_read", {"request": {"filename": test_dir}})
         assert "AnnData" in result[0].text

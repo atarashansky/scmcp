@@ -2,12 +2,7 @@
 import pytest
 
 @pytest.fixture
-def mcp_config():
-    return {
-        "mcpServers": {
-            "scmcp": {
-                "command": "scmcp",
-                "args": ["run"]
-            }
-        }
-    }
+def mcp():
+    from scmcp.server import SCMCPManager
+    mcp = SCMCPManager("scmcp").mcp
+    return mcp
