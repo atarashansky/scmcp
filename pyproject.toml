@@ -9,11 +9,13 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
+    "nest_asyncio",
+    "scmcp-shared>=0.3.0",
     "scanpy-mcp",
-    "cellrank-mcp>=0.2.2",
+    "cellrank-mcp",
     "liana-mcp",
-    "decoupler-mcp>=0.2.5",
-    "scmcp-shared>=0.2.5",
+    "decoupler-mcp",
+    "infercnv-mcp",
     "mcp>=1.8.0",
     "fastmcp>=2.3.5",
 ]
@@ -23,7 +25,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-scmcp = "scmcp.cli:app"
+scmcp = "scmcp.cli:run_cli"
 
 [dependency-groups]
 dev = [
