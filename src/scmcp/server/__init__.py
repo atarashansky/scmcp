@@ -1,47 +1,57 @@
 
-import asyncio
-from fastmcp import FastMCP
-from collections.abc import AsyncIterator
-from contextlib import asynccontextmanager
-from typing import Any
+from decoupler_mcp.server import DecouplerMCPManager
+from cellrank_mcp.server import CellrankMCPManager
+from liana_mcp.server import LianaMCPManager
+from scanpy_mcp.server import ScanpyMCPManager
+from scmcp_shared.server import BaseMCPManager
+from infercnv_mcp.server import InferCNVMCPManager
 
 
-import scanpy_mcp.server as sc_server
-import liana_mcp.server as li_server
-import cellrank_mcp.server as cr_server
-import decoupler_mcp.server as dc_server
-import scmcp_shared.server as shs
+sc_mcp = ScanpyMCPManager("scanpy-mcp").mcp
+
+cr_mcp = CellrankMCPManager(
+    "cellrank-mcp", 
+    include_modules=["pp", "kernel", "estimator", "pl"],
+    include_tools={
+        "pp": ["filter_and_normalize"],
+        "pl": ["kernel_projection", "circular_projection"]
+    }
+).mcp
+dc_mcp = DecouplerMCPManager(
+    "decoupler-mcp", 
+    include_modules=["if"],
+).mcp
+cnv_mcp = InferCNVMCPManager(
+    "infercnv-mcp", 
+    include_modules=["tl", "pl", "ul"],
+    include_tools={
+        "pl": ["chromosome_heatmap"],
+        "tl": ["infercnv", "cnv_score"],
+        "ul": ["load_gene_position"]
+    }
+).mcp
+
+li_mcp = LianaMCPManager(
+    "liana-mcp", include_modules=["ccc", "pl"],
+    include_tools={
+        "ccc": ["communicate", "rank_aggregate", "ls_ccc_method"],
+        "pl": ["ccc_dotplot", "circle_plot"]
+    }
+).mcp
 
 
+available_modules = {
+    "sc": sc_mcp, 
+    "li": li_mcp, 
+    "cr": cr_mcp, 
+    "dc": dc_mcp,
+    "cnv": cnv_mcp
+}
 
 
-
-ads = shs.AdataState()
-
-@asynccontextmanager
-async def adata_lifespan(server: FastMCP) -> AsyncIterator[Any]:
-    yield ads
-
-
-sc_mcp = FastMCP("SC-MCP-Server", lifespan=adata_lifespan)
-
-asyncio.run(sc_server.setup())
-asyncio.run(li_server.setup(modules=["ccc", "pl"]))
-asyncio.run(cr_server.setup(modules=["pp", "kernel", "estimator", "pl"]))
-asyncio.run(dc_server.setup(modules=["if", "pl"]))
-
-
-async def setup(modules=None):
-    mcp_dic = {
-        "sc": sc_server.scanpy_mcp, 
-        "li": li_server.liana_mcp, 
-        "cr": cr_server.cellrank_mcp, 
-        "dc": dc_server.decoupler_mcp
-        }
-    if modules is None:
-        modules = mcp_dic.keys()
-    for module in modules:
-        if module in mcp_dic:
-            await sc_mcp.import_server(module, mcp_dic[module])
-        else:
-            raise ValueError(f"Module {module} not found")
+class SCMCPManager(BaseMCPManager):
+    """Manager class for SCMCP modules."""
+    
+    def _init_modules(self):
+        """Initialize available SCMCP modules."""
+        self.available_modules = available_modules
