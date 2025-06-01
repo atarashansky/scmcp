@@ -25,7 +25,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-scmcp = "scmcp.cli:run_cli"
+scmcp = "scmcp.cli:cli.run"
 
 [dependency-groups]
 dev = [

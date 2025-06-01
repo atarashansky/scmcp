@@ -8,21 +8,19 @@ from scmcp_shared.cli import MCPCLI
 from .server import SCMCPManager
 
 
-class ModuleEnum(str, Enum):
-    """Base class for module types."""
-    ALL = "all"
-    SC = "sc"
-    LI = "li"
-    CR = "cr"
-    DC = "dc"
 
+class SCMCPCLI(MCPCLI):
+    def __init__(self, name: str, help_text: str, manager=None):
+        super().__init__(name, help_text, manager)
+        self.subcommands['run'][0].add_argument(
+            '-m', '--module',
+            nargs='+',
+            default=["all"],
+            choices=["all", "sc", "li", "cr", "dc"],
+            help='specify module to run')
 
-cli = MCPCLI(
+cli = SCMCPCLI(
     name="scmcp", 
     help_text="SCMCP Server CLI",
     manager=SCMCPManager,
-    modules=ModuleEnum
 )
-
-def run_cli():
-    cli.app()
