@@ -11,7 +11,7 @@ from .server import SCMCPManager
 
 class SCMCPCLI(MCPCLI):
     def __init__(self, name: str, help_text: str, manager=None):
-        super().__init__(name, help_text, manager)
+        super().__init__(name, help_text, manager=manager)
         self.subcommands['run'][0].add_argument(
             '-m', '--module',
             nargs='+',
