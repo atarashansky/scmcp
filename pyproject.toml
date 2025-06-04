@@ -37,6 +37,12 @@ dev = [
 [tool.hatch.version]
 path = "src/scmcp/__init__.py"  
 
+[project.urls]
+Homepage = "http://scmcphub.org/"
+Repository = "https://github.com/scmcphub/scmcp"
+Documentation = "https://docs.scmcphub.org/"
+
+
 [tool.pytest.ini_options]
 asyncio_mode = "strict"
 asyncio_default_fixture_loop_scope = "function"
