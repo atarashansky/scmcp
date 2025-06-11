@@ -90,6 +90,41 @@ Then configure your MCP client in local AI client, like this:
 }
 ```
 
+## Intelligent Tool Selection (Experimental)
+
+SCMCP implements an intelligent tool selection system to optimize performance and reduce token usage. 
+
+### How it Works
+
+The intelligent tool selection system operates in two phases:
+1. **Search_tool**: First identifies the most relevant tools for your analysis
+2. **run_tool**: Then runs only the selected tools, reducing token consumption
+
+
+### Usage
+
+1. Ensure you have the latest version of scmcp-shared installed:
+```bash
+pip install --upgrade scmcp-shared
+```
+
+2. Start the server with intelligent tool selection enabled:
+```bash
+scmcp run --transport shttp --port 8000 --tool-mode auto
+```
+
+3. Configure your MCP client to connect to the server:
+```json
+{
+  "mcpServers": {
+    "scmcp": {
+      "url": "http://localhost:8000/mcp"
+    }
+  }
+}
+```
+
+
 ## 🤝 Contributing
 
 If you have any questions, welcome to submit an issue, or contact me(hsh-me@outlook.com). Contributions to the code are also welcome!

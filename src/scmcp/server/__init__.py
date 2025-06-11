@@ -5,7 +5,7 @@ from liana_mcp.server import LianaMCPManager
 from scanpy_mcp.server import ScanpyMCPManager
 from scmcp_shared.server import BaseMCPManager
 from infercnv_mcp.server import InferCNVMCPManager
-
+from scmcp_shared.server.auto import auto_mcp
 
 sc_mcp = ScanpyMCPManager("scanpy-mcp").mcp
 
@@ -45,7 +45,8 @@ available_modules = {
     "li": li_mcp, 
     "cr": cr_mcp, 
     "dc": dc_mcp,
-    "cnv": cnv_mcp
+    "cnv": cnv_mcp,
+    "auto": auto_mcp,
 }
 
 
