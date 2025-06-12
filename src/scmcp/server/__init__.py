@@ -15,27 +15,43 @@ cr_mcp = CellrankMCPManager(
     include_tools={
         "pp": ["filter_and_normalize"],
         "pl": ["kernel_projection", "circular_projection"]
+    },
+    exclude_modules=["auto"],
+    exclude_tools={
+        "auto": ["search_tool", "run_tool"],
     }
 ).mcp
 dc_mcp = DecouplerMCPManager(
     "decoupler-mcp", 
     include_modules=["if"],
+    exclude_modules=["auto"],
+    exclude_tools={
+        "auto": ["search_tool", "run_tool"],
+    }
 ).mcp
 cnv_mcp = InferCNVMCPManager(
     "infercnv-mcp", 
     include_modules=["tl", "pl", "ul"],
+    exclude_modules=["auto"],
     include_tools={
         "pl": ["chromosome_heatmap"],
         "tl": ["infercnv", "cnv_score"],
         "ul": ["load_gene_position"]
+    },
+    exclude_tools={
+        "auto": ["search_tool", "run_tool"],
     }
 ).mcp
 
 li_mcp = LianaMCPManager(
     "liana-mcp", include_modules=["ccc", "pl"],
+    exclude_modules=["auto"],
     include_tools={
         "ccc": ["communicate", "rank_aggregate", "ls_ccc_method"],
         "pl": ["ccc_dotplot", "circle_plot"]
+    },
+    exclude_tools={
+        "auto": ["search_tool", "run_tool"],
     }
 ).mcp
 
