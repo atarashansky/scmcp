@@ -110,6 +110,9 @@ pip install --upgrade scmcp-shared
 
 2. Start the server with intelligent tool selection enabled:
 ```bash
+export API_KEY=sk-***
+export BASE_URL="https://api.openai.com/v1"
+export MODEL="gpt-4o"
 scmcp run --transport shttp --port 8000 --tool-mode auto
 ```
 
