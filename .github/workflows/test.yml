@@ -25,8 +25,26 @@ jobs:
         run: |
           # Generate lockfile if it doesn't exist
           if [ ! -f "uv.lock" ]; then
-            uv lock --no-deps instructor
+            uv lock
           fi
+
+          if ! uv sync --frozen --all-extras --dev --python ${{ matrix.python-version }}; then
+            echo "Normal sync failed, installing packages individually"
+            
+            # 创建虚拟环境
+            uv venv --python ${{ matrix.python-version }}
+            source .venv/bin/activate
+            
+            # 安装项目本身
+            uv pip install -e .
+            
+            # 单独安装冲突的包，忽略依赖
+            uv pip install cellrank --no-deps
+            
+            # 安装其他开发依赖
+            uv pip install pytest pytest-cov --force-reinstall
+          fi
+
           uv sync --frozen --all-extras --dev --python ${{ matrix.python-version }}
 
       - name: Run pytest

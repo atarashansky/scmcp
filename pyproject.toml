@@ -30,6 +30,7 @@ dependencies = [
     "infercnv-mcp",
     "mcp>=1.8.0",
     "fastmcp>=2.3.5",
+    "jinja2",
     "agno",
     "lancedb"
 ]
