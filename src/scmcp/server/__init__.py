@@ -1,5 +1,4 @@
 from decoupler_mcp.server import DecouplerMCPManager
-from cellrank_mcp.server import CellrankMCPManager
 from liana_mcp.server import LianaMCPManager
 from scanpy_mcp.server import ScanpyMCPManager
 from scmcp_shared.mcp_base import BaseMCPManager
@@ -7,6 +6,7 @@ from infercnv_mcp.server import InferCNVMCPManager
 from scmcp_shared.server.auto import auto_mcp
 from scmcp_shared.backend import AdataManager
 from scmcp_shared.server.code import nb_mcp
+from cellrank_mcp.server import CellrankMCPManager
 
 sc_mcp = ScanpyMCPManager(
     "scanpy-mcp",
