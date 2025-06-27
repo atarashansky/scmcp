@@ -2,9 +2,9 @@ name: test package
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   test:
@@ -25,10 +25,9 @@ jobs:
         run: |
           # Generate lockfile if it doesn't exist
           if [ ! -f "uv.lock" ]; then
-            uv lock
+            uv lock --no-deps instructor
           fi
           uv sync --frozen --all-extras --dev --python ${{ matrix.python-version }}
 
       - name: Run pytest
         run: uv run --no-sync pytest
-
