@@ -22,7 +22,7 @@ keywords = [
 requires-python = ">=3.10"
 dependencies = [
     "nest_asyncio",
-    "scmcp-shared>=0.6.1",
+    "scmcp-shared>=0.6.0",
     "scanpy-mcp",
     "cellrank-mcp",
     "liana-mcp",
