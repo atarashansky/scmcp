@@ -22,15 +22,14 @@ keywords = [
 requires-python = ">=3.10"
 dependencies = [
     "nest_asyncio",
-    "scmcp-shared>=0.5.0",
+    "scmcp-shared>=0.6.1",
     "scanpy-mcp",
     "cellrank-mcp",
     "liana-mcp",
     "decoupler-mcp",
     "infercnv-mcp",
     "mcp>=1.8.0",
-    "fastmcp>=2.3.5",
-    "jinja2",
+    "fastmcp>=2.10.0",
     "agno",
     "lancedb"
 ]
