@@ -6,12 +6,13 @@ from infercnv_mcp.server import InferCNVMCPManager
 from scmcp_shared.server.auto import auto_mcp
 from scmcp_shared.backend import AdataManager
 from scmcp_shared.server.code import nb_mcp
+from scmcp_shared.server.rag import rag_mcp
 from cellrank_mcp.server import CellrankMCPManager
 
 sc_mcp = ScanpyMCPManager(
     "scanpy-mcp",
     backend=AdataManager,
-    exclude_modules=["auto"],
+    exclude_modules=["auto", "nb"],
     exclude_tools={
         "auto": ["search_tool", "run_tool"],
     },
@@ -77,6 +78,7 @@ available_modules = {
     "cnv": cnv_mcp,
     "auto": auto_mcp,
     "nb": nb_mcp,
+    "rag": rag_mcp,
 }
 
 
