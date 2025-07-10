@@ -1,20 +1,20 @@
 # SCMCP
 
-An MCP server for scRNA-Seq analysis  with natural language!
+An MCP server for scRNA-Seq analysis with natural language!
 
 ## 🪩 What can it do?
 
-- IO module like read and write scRNA-Seq data with natural language
-- Preprocessing module,like filtering, quality control, normalization, scaling, highly-variable genes, PCA, Neighbors,...
-- Tool module, like clustering, differential expression etc.
-- Plotting module, like violin, heatmap, dotplot
-- cell-cell communication analysis
-- Pseudotime analysis
-- enrichment analysis
+- **IO module**: Read and write scRNA-Seq data with natural language
+- **Preprocessing module**: Filtering, quality control, normalization, scaling, highly-variable genes, PCA, Neighbors,...
+- **Tool module**: Clustering, differential expression, etc.
+- **Plotting module**: Violin plots, heatmaps, dotplots
+- **Cell-cell communication analysis**
+- **Pseudotime analysis**
+- **Enrichment analysis**
 
 ## ❓ Who is this for?
 
-- Anyone who wants to do scRNA-Seq analysis natural language!
+- Anyone who wants to do scRNA-Seq analysis using natural language!
 - Agent developers who want to call scanpy's functions for their applications
 
 ## 🌐 Where to use it?
@@ -25,15 +25,13 @@ You can use scmcp in most AI clients, plugins, or agent frameworks that support 
 - Plugins, like Cline
 - Agent frameworks, like Agno 
 
-
 ## 📚 Documentation
 
 scmcphub's complete documentation is available at https://docs.scmcphub.org
 
-
 ## 🎬 Demo
 
-A demo showing scRNA-Seq cell cluster analysis in a AI client Cherry Studio using natural language based on scmcp
+A demo showing scRNA-Seq cell cluster analysis in an AI client Cherry Studio using natural language based on scmcp:
 
 https://github.com/user-attachments/assets/93a8fcd8-aa38-4875-a147-a5eeff22a559
 
@@ -41,82 +39,119 @@ https://github.com/user-attachments/assets/93a8fcd8-aa38-4875-a147-a5eeff22a559
 
 ### Install
 
-Install from PyPI
-```
+Install from PyPI:
+```bash
 pip install scmcp
 ```
-you can test it by running
-```
+
+You can test it by running:
+```bash
 scmcp run
 ```
 
-#### run scnapy-mcp locally
-Refer to the following configuration in your MCP client:
+## 🚀 Running Modes
 
-check path
-```
-$ which scmcp 
-/home/test/bin/scmcp
+SCMCP provides two distinct run modes to accommodate different user needs and preferences:
+
+### 1. Tool Mode
+
+In tool mode, SCMCP provides a curated set of predefined functions that the LLM can select and execute.
+
+**Advantages:**
+- **Stable**: Predefined functions ensure consistent and reliable execution
+- **Predictable**: Known behavior and expected outputs
+- **Safe**: Controlled environment with validated operations
+
+**Disadvantages:**
+- **Limited flexibility**: Restricted to available predefined functions; you need to define new tools when you need customization functions
+
+#### Usage
+
+Running in terminal:
+```bash
+scmcp run --run-mode tool
 ```
 
-> it has many tools , so it couldn't work if you model context is not large...More time, I recommend it is backend mcp server for scanpy-mcp, liana-mcp,cellrank-mcp, so they can use shared Anndata object.
-
-```
-"mcpServers": {
-  "scmcp": {
-    "command": "/home/test/bin/scmcp",
-    "args": [
-      "run"
-    ]
+Configure MCP client:
+```json
+{
+  "mcpServers": {
+    "scmcp": {
+      "command": "/home/test/bin/scmcp",
+      "args": ["run", "--run-mode", "tool"]
+    }
   }
 }
 ```
 
-#### run scmcp remotely
-Refer to the following configuration in your MCP client:
+**Examples:**
+- https://youtu.be/VM7G-VMNhOs
+- https://youtu.be/D669c0EyNzE
+- https://youtu.be/b45_6fJXEIQ
 
-run it in your server
-```
-scmcp run --transport shttp --port 8000
+### 2. Code Mode
+
+In code mode, SCMCP provides a Jupyter backend that allows the LLM to generate and execute custom code. Additionally, it can generate complete Jupyter notebooks containing executable code, analysis results, and visualizations.
+
+This mode is based on the project: https://github.com/huang-sh/abcoder
+
+**Advantages:**
+- **Highly flexible**: Can create custom workflows and combine operations freely
+- **Extensible**: Supports any Python code and external libraries
+- **Interactive**: Real-time code execution and debugging capabilities
+
+**Disadvantages:**
+- **Less stable**: Code generation may vary each time
+
+#### Usage
+
+Running in terminal:
+```bash
+scmcp run --run-mode code
 ```
 
-Then configure your MCP client in local AI client, like this:
-```
-
-"mcpServers": {
-  "scmcp": {
-    "url": "http://localhost:8000/mcp"
+Configure MCP client:
+```json
+{
+  "mcpServers": {
+    "scmcp": {
+      "command": "/home/test/bin/scmcp",
+      "args": ["run", "--run-mode", "code"]
+    }
   }
 }
 ```
 
-## Intelligent Tool Selection (Experimental)
+**Example:**
+https://youtu.be/3jtXIeapslI
 
-SCMCP implements an intelligent tool selection system to optimize performance and reduce token usage. 
+## 📝 Mode Comparison
 
-### How it Works
+| Feature | Tool Mode | Code Mode |
+|---------|-----------|-----------|
+| **Execution Method** | Predefined functions | Custom code generation |
+| **Stability** | High (consistent) | Lower (variable) |
+| **Flexibility** | Limited to available tools | Highly flexible |
+| **Safety** | Controlled environment | Full Python execution |
+| **Use Case** | Standard workflows | Custom analysis |
+| **Learning Curve** | Easy to use | Requires Python knowledge |
 
-The intelligent tool selection system operates in two phases:
-1. **Search_tool**: First identifies the most relevant tools for your analysis
-2. **run_tool**: Then runs only the selected tools, reducing token consumption
+## 🌐 Remote Deployment
 
+For both modes, you can also run SCMCP remotely:
 
-### Usage
+### Remote Setup
 
-1. Ensure you have the latest version of scmcp-shared installed:
+Start the server:
 ```bash
-pip install --upgrade scmcp-shared
+# Tool mode
+scmcp run --transport shttp --port 8000 --run-mode tool
+
+# Code mode
+scmcp run --transport shttp --port 8000 --run-mode code
 ```
 
-2. Start the server with intelligent tool selection enabled:
-```bash
-export API_KEY=sk-***
-export BASE_URL="https://api.openai.com/v1"
-export MODEL="gpt-4o"
-scmcp run --transport shttp --port 8000 --tool-mode auto
-```
-
-3. Configure your MCP client to connect to the server:
+Configure your MCP client:
 ```json
 {
   "mcpServers": {
@@ -127,13 +162,14 @@ scmcp run --transport shttp --port 8000 --tool-mode auto
 }
 ```
 
-
 ## 🤝 Contributing
 
-If you have any questions, welcome to submit an issue, or contact me(hsh-me@outlook.com). Contributions to the code are also welcome!
+If you have any questions, welcome to submit an issue, or contact me (hsh-me@outlook.com). Contributions to the code are also welcome!
 
 ## Citing
-If you use scmcp in for your research, please consider citing  following works: 
+
+If you use scmcp in your research, please consider citing the following works:
+
 > Wolf, F., Angerer, P. & Theis, F. SCANPY: large-scale single-cell gene expression data analysis. Genome Biol 19, 15 (2018). https://doi.org/10.1186/s13059-017-1382-0
 
 > Dimitrov D., Schäfer P.S.L, Farr E., Rodriguez Mier P., Lobentanzer S., Badia-i-Mompel P., Dugourd A., Tanevski J., Ramirez Flores R.O. and Saez-Rodriguez J. LIANA+ provides an all-in-one framework for cell–cell communication inference. Nat Cell Biol (2024). https://doi.org/10.1038/s41556-024-01469-w
