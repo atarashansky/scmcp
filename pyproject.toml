@@ -22,7 +22,7 @@ keywords = [
 requires-python = ">=3.10"
 dependencies = [
     "nest_asyncio",
-    "scmcp-shared>=0.6.0",
+    "scmcp-shared @ git+https://github.com/atarashansky/scmcp-shared",
     "scanpy-mcp",
     "cellrank-mcp",
     "liana-mcp",
@@ -49,7 +49,10 @@ dev = [
 
 
 [tool.hatch.version]
-path = "src/scmcp/__init__.py"  
+path = "src/scmcp/__init__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [project.urls]
 Homepage = "http://scmcphub.org/"
