@@ -23,7 +23,7 @@ requires-python = ">=3.10"
 dependencies = [
     "nest_asyncio",
     "scmcp-shared @ git+https://github.com/atarashansky/scmcp-shared",
-    "scanpy-mcp",
+    "scanpy-mcp @ git+https://github.com/atarashansky/scanpy-mcp",
     "cellrank-mcp",
     "liana-mcp",
     "decoupler-mcp",
