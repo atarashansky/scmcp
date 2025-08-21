@@ -1,4 +1,3 @@
-from decoupler_mcp.server import DecouplerMCPManager
 from liana_mcp.server import LianaMCPManager
 from scanpy_mcp.server import ScanpyMCPManager
 from scmcp_shared.mcp_base import BaseMCPManager
@@ -31,15 +30,7 @@ cr_mcp = CellrankMCPManager(
     },
     backend=AdataManager,
 ).mcp
-dc_mcp = DecouplerMCPManager(
-    "decoupler-mcp",
-    include_modules=["if"],
-    exclude_modules=["auto"],
-    exclude_tools={
-        "auto": ["search_tool", "run_tool"],
-    },
-    backend=AdataManager,
-).mcp
+
 cnv_mcp = InferCNVMCPManager(
     "infercnv-mcp",
     include_modules=["tl", "pl", "ul"],
@@ -74,7 +65,6 @@ available_modules = {
     "sc": sc_mcp,
     "li": li_mcp,
     "cr": cr_mcp,
-    "dc": dc_mcp,
     "cnv": cnv_mcp,
     "auto": auto_mcp,
     "nb": nb_mcp,

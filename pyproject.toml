@@ -26,7 +26,6 @@ dependencies = [
     "scanpy-mcp @ git+https://github.com/atarashansky/scanpy-mcp",
     "cellrank-mcp",
     "liana-mcp",
-    "decoupler-mcp",
     "infercnv-mcp",
     "mcp>=1.8.0",
     "fastmcp>=2.10.0",
